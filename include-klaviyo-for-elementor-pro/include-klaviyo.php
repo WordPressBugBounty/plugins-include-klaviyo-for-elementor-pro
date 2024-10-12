@@ -130,6 +130,77 @@ class Tho_klaviyo_Form_Action extends \ElementorPro\Modules\Forms\Classes\Integr
 
         }
 
+        if ( !empty( $settings['klaviyo_address1'] ) ) {
+
+            $address1_id = $settings['klaviyo_address1'];
+
+            $fields[ 'address1' ] = $fields[ $address1_id ];
+
+            if($address1_id != 'address1'){
+                unset($fields[ $address1_id ]);
+            }
+
+        }
+
+        if ( !empty( $settings['klaviyo_address2'] ) ) {
+
+            $address2_id = $settings['klaviyo_address2'];
+
+            $fields[ 'address2' ] = $fields[ $address2_id ];
+
+            if($address2_id != 'address2'){
+                unset($fields[ $address2_id ]);
+            }
+
+        }
+
+        if ( !empty( $settings['klaviyo_country'] ) ) {
+
+            $country_id = $settings['klaviyo_country'];
+
+            $fields[ 'country' ] = $fields[ $country_id ];
+
+            if($country_id != 'country'){
+                unset($fields[ $country_id ]);
+            }
+
+        }
+
+        if ( !empty( $settings['klaviyo_city'] ) ) {
+
+            $city_id = $settings['klaviyo_city'];
+
+            $fields[ 'city' ] = $fields[ $city_id ];
+
+            if($city_id != 'city'){
+                unset($fields[ $city_id ]);
+            }
+
+        }
+
+        if ( !empty( $settings['klaviyo_region'] ) ) {
+
+            $region_id = $settings['klaviyo_region'];
+
+            $fields[ 'region' ] = $fields[ $region_id ];
+
+            if($region_id != 'region'){
+                unset($fields[ $region_id ]);
+            }
+
+        }
+
+        if ( !empty( $settings['klaviyo_zip'] ) ) {
+
+            $zip_id = $settings['klaviyo_zip'];
+
+            $fields[ 'zip' ] = $fields[ $zip_id ];
+
+            if($zip_id != 'zip'){
+                unset($fields[ $zip_id ]);
+            }
+
+        }
 
         // If we got this far we can start building our request data
         // Based on the list API at https://www.klaviyo.com/docs/api/v2/lists
@@ -178,6 +249,36 @@ class Tho_klaviyo_Form_Action extends \ElementorPro\Modules\Forms\Classes\Integr
         if(isset($fields[ 'last_name' ])){
             $profdata['attributes']['last_name'] = $fields[ 'last_name' ];
             unset($fields[ 'last_name' ]);
+        }
+
+        if(isset($fields[ 'address1' ])){
+            $profdata['attributes']['location']['address1'] = $fields[ 'address1' ];
+            unset($fields[ 'address1' ]);
+        }
+
+        if(isset($fields[ 'address2' ])){
+            $profdata['attributes']['location']['address2'] = $fields[ 'address2' ];
+            unset($fields[ 'address2' ]);
+        }
+
+        if(isset($fields[ 'country' ])){
+            $profdata['attributes']['location']['country'] = $fields[ 'country' ];
+            unset($fields[ 'country' ]);
+        }
+
+        if(isset($fields[ 'city' ])){
+            $profdata['attributes']['location']['city'] = $fields[ 'city' ];
+            unset($fields[ 'city' ]);
+        }
+
+        if(isset($fields[ 'region' ])){
+            $profdata['attributes']['location']['region'] = $fields[ 'region' ];
+            unset($fields[ 'region' ]);
+        }
+
+        if(isset($fields[ 'zip' ])){
+            $profdata['attributes']['location']['zip'] = $fields[ 'zip' ];
+            unset($fields[ 'zip' ]);
         }
 
         if($this->phoneActive === true){
@@ -285,6 +386,7 @@ class Tho_klaviyo_Form_Action extends \ElementorPro\Modules\Forms\Classes\Integr
             $message['api_key'] = '';
             $message['action'] = $action;
             $message['out_put'] = $bodyOutput;
+            $message['profile'] = json_encode( (object)array('data' => $profdata));
             $message['response'] = $request;
             fwrite( $log_handle, print_r($message, true) . "\n" );
             fclose( $log_handle );
@@ -435,6 +537,98 @@ class Tho_klaviyo_Form_Action extends \ElementorPro\Modules\Forms\Classes\Integr
         );
 
         $widget->add_control(
+            'klaviyo_location',
+            [
+                'label' => esc_html__( 'Location', 'textdomain' ),
+                'type' => \Elementor\Controls_Manager::SWITCHER,
+            ]
+        );
+
+        $widget->add_control(
+            'klaviyo_address1',
+            [
+                'label' => __( 'Address 1'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'label_block' => true,
+                'separator' => 'before',
+                'description' => __( 'enter ID for Address 1 feild if you want to auto merge Address 1 to your list' ),
+                'condition' => [
+                    'klaviyo_location' => 'yes',
+                ],
+            ]
+        );
+
+        $widget->add_control(
+            'klaviyo_address2',
+            [
+                'label' => __( 'Address 2'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'label_block' => true,
+                'separator' => 'before',
+                'description' => __( 'enter ID for Address 2 feild if you want to auto merge Address 2 to your list' ),
+                'condition' => [
+                    'klaviyo_location' => 'yes',
+                ],
+            ]
+        );
+
+        $widget->add_control(
+            'klaviyo_country',
+            [
+                'label' => __( 'Country'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'label_block' => true,
+                'separator' => 'before',
+                'description' => __( 'enter ID for Country feild if you want to auto merge Country to your list' ),
+                'condition' => [
+                    'klaviyo_location' => 'yes',
+                ],
+            ]
+        );
+
+        $widget->add_control(
+            'klaviyo_city',
+            [
+                'label' => __( 'City'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'label_block' => true,
+                'separator' => 'before',
+                'description' => __( 'enter ID for City feild if you want to auto merge City to your list' ),
+                'condition' => [
+                    'klaviyo_location' => 'yes',
+                ],
+            ]
+        );
+
+        $widget->add_control(
+            'klaviyo_region',
+            [
+                'label' => __( 'Region/State'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'label_block' => true,
+                'separator' => 'before',
+                'description' => __( 'enter ID for Region feild if you want to auto merge Region to your list' ),
+                'condition' => [
+                    'klaviyo_location' => 'yes',
+                ],
+            ]
+        );
+
+        $widget->add_control(
+            'klaviyo_zip',
+            [
+                'label' => __( 'Zip Code'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'label_block' => true,
+                'separator' => 'before',
+                'description' => __( 'enter ID for Zip Code feild if you want to auto merge Zip Code to your list' ),
+                'condition' => [
+                    'klaviyo_location' => 'yes',
+                ],
+            ]
+        );
+
+        $widget->add_control(
             'klaviyo_debug',
             [
                 'label' => __( 'Debug Log' ),
@@ -468,6 +662,12 @@ class Tho_klaviyo_Form_Action extends \ElementorPro\Modules\Forms\Classes\Integr
             $element['klaviyo_lname'],
             $element['klaviyo_consent_sms'],
             $element['klaviyo_action'],
+            $element['klaviyo_address1'],
+            $element['klaviyo_address2'],
+            $element['klaviyo_country'],
+            $element['klaviyo_city'],
+            $element['klaviyo_region'],
+            $element['klaviyo_zip'],
             $element['klaviyo_debug']
         );
 
@@ -480,4 +680,3 @@ class Tho_klaviyo_Form_Action extends \ElementorPro\Modules\Forms\Classes\Integr
     }
 
 }
-
