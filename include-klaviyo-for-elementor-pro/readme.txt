@@ -2,8 +2,8 @@
 Contributors: 
 Donate link: paypal.me/nguyenminhthong
 Tags: Klaviyo, Elementor Pro
-Requires at least: 4.3
-Tested up to: 6.6.2
+Requires at least: 5.4
+Tested up to: 6.7.1
 Stable tag: 5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -111,8 +111,8 @@ follow the guide here: https://nguyenminhthong.net/resource
 =Version 4.1=
 1. Allow add/subscribe a profile to multi list
 
-=Version 4.1=
-1. Adding location settings to automatically merge to Klaviyo list
+=Version 5.0=
+1. Adding location info to automatically merge to Klaviyo list
 2. Inprove Debug function
 
 == Upgrade notice ==
