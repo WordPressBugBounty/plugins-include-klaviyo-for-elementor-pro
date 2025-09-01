@@ -311,7 +311,7 @@ class Tho_klaviyo_Form_Action extends \ElementorPro\Modules\Forms\Classes\Integr
         $proid = $proid['data']['id'];
         //$proid = 'Test ID';
 
-        if($settings['klaviyo_consent_sms'] == "enable"){
+        if (isset($settings['klaviyo_consent_sms']) && $settings['klaviyo_consent_sms'] === "enable") {
             $phonecsr = ',"sms": {
                 "marketing": {
                   "consent": "SUBSCRIBED"
@@ -332,7 +332,7 @@ class Tho_klaviyo_Form_Action extends \ElementorPro\Modules\Forms\Classes\Integr
                       "type": "profile",
                       "id": "'.$proid.'",
                       "attributes": {
-                        "email": "'.$fields[ 'email' ].'",'.$phonecs.'
+                        "email": "'.$fields[ 'email' ].'",'.$phonecsr.'
                         "subscriptions": {
                           "email": {
                             "marketing": {
