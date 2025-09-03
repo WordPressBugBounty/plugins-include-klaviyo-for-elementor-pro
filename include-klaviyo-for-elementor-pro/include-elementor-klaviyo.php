@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Include Klaviyo for Elementor pro
  * Description:       Klaviyo's list API integration for Elementor pro form
- * Version:           5.0.1
+ * Version:           5.1.0
  * Author:            Thong Nguyen
  * Author URI:        https://nguyenminhthong.net/aboutme
  * License:           GPL v2 or later
@@ -61,7 +61,7 @@ final class Tho_Elementor_Extension {
      *
      * @var string The plugin version.
      */
-    const VERSION = '5.0.1';
+    const VERSION = '5.1.0';
 
     /**
      * Minimum Elementor Version
@@ -224,45 +224,44 @@ final class Tho_Elementor_Extension {
         add_action( 'elementor/widgets/widgets_registered', [ $this, 'init_widgets' ] );
         add_action( 'elementor/controls/controls_registered', [ $this, 'init_controls' ] );
     }
+    
 
-    public function main_dashboard_notices() {
-        $endpoint = 'https://nguyenminhthong.net/wp-json/kvelem/v1/notice';
-        $response = wp_remote_get($endpoint);
-        if(!is_wp_error($response) && $response['response']['code'] === 200){
+public function main_dashboard_notices() {
+    $transient_key = 'tho_klaviyo_notices';
+    $notices = get_transient($transient_key);
+
+    if ($notices === false) {
+        // Fetch from remote only if cache expired
+        $endpoint  = 'https://nguyenminhthong.net/wp-json/kvelem/v1/notice';
+        $response  = wp_remote_get($endpoint, array('timeout' => 5));
+
+        if (!is_wp_error($response) && $response['response']['code'] === 200) {
             $notices = json_decode($response['body'], true);
 
-            // Process the notices
-            if (!empty($notices)) {
-                //foreach ($notices as $notice) {
-                    $notice_text = $notices['notices']['text'];
-                    $heading_text = $notices['notices']['title'];
-                    $notice_type = sanitize_text_field($notices['notices']['type']);
-                    $version = $notices['notices']['version'];
-                    $isdismiss = get_option('tho-klaviyo-isdismiss');
-
-
-                    if ($isdismiss != $version) {
-                    // Display the notice based on its type
-                        switch ($notice_type) {
-                            case 'info':
-                                echo '<div class="notice notice-info is-dismissible tho-admin-notices"><h3>'.$heading_text.'</h3><p>' . $notice_text . '</p><button type="button" class="notice-dismiss" onclick="dismissNotice(\'' . $version . '\');"><span class="screen-reader-text">Dismiss this notice.</span></button></div>';
-                                break;
-                            case 'warning':
-                                echo '<div class="notice notice-warning is-dismissible tho-admin-notices"><h3>'.$heading_text.'</h3><p>' . $notice_text . '</p><button type="button" class="notice-dismiss" onclick="dismissNotice(\'' . $version . '\');"><span class="screen-reader-text">Dismiss this notice.</span></button></div>';
-                                break;
-                            case 'error':
-                                echo '<div class="notice notice-error is-dismissible tho-admin-notices"><h3>'.$heading_text.'</h3><p>' . $notice_text . '</p><button type="button" class="notice-dismiss" onclick="dismissNotice(\'' . $version . '\');"><span class="screen-reader-text">Dismiss this notice.</span></button></div>';
-                                break;
-                            default:
-                                // Handle unrecognized notice types
-                                echo '<div class="notice is-dismissible tho-admin-notices"><h3>'.$heading_text.'</h3><p>' . $notice_text . '</p><button type="button" class="notice-dismiss" onclick="dismissNotice(\'' . $version . '\');"><span class="screen-reader-text">Dismiss this notice.</span></button></div>';
-                                break;
-                        }
-                    }
-                //}
-            }
+            // Save in cache for 6 hours (change as needed)
+            set_transient($transient_key, $notices, 6 * HOUR_IN_SECONDS);
         }
     }
+
+    if (!empty($notices) && isset($notices['notices'])) {
+        $notice_text = $notices['notices']['text'] ?? '';
+        $heading_text = $notices['notices']['title'] ?? '';
+        $notice_type = sanitize_text_field($notices['notices']['type'] ?? 'info');
+        $version = $notices['notices']['version'] ?? '';
+        $isdismiss = get_option('tho-klaviyo-isdismiss');
+
+        if ($isdismiss != $version) {
+            $class = 'notice notice-' . esc_attr($notice_type) . ' is-dismissible tho-admin-notices';
+            echo '<div class="' . $class . '">
+                <h3>' . esc_html($heading_text) . '</h3>
+                <p>' . esc_html($notice_text) . '</p>
+                <button type="button" class="notice-dismiss" onclick="dismissNotice(\'' . esc_js($version) . '\');">
+                    <span class="screen-reader-text">Dismiss this notice.</span>
+                </button>
+            </div>';
+        }
+    }
+}
     
     /**
      * Admin notice
