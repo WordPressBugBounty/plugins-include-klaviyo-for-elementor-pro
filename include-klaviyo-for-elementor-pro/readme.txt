@@ -130,6 +130,9 @@ follow the guide here: https://nguyenminhthong.net/resource
 =Version 5.1.3=
 1. Bugs fix (sms consent)
 
+=Version 5.1.4=
+1. Bugs fix (sms consent)
+
 == Upgrade notice ==
 
 

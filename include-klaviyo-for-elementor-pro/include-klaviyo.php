@@ -321,7 +321,7 @@ class Tho_klaviyo_Form_Action extends \ElementorPro\Modules\Forms\Classes\Integr
             $phonecsr = '';
         }
 
-        $phonecsr1 = $phonecsr != '' ? "$phonecsr," : '';
+        //$phonecsr1 = $phonecsr != '' ? "$phonecsr," : '';
         $phonecsr2 = $phonecsr != '' ? ",$phonecsr" : '';
 
         foreach($listarg as $listid){
@@ -335,7 +335,7 @@ class Tho_klaviyo_Form_Action extends \ElementorPro\Modules\Forms\Classes\Integr
                       "type": "profile",
                       "id": "'.$proid.'",
                       "attributes": {
-                        "email": "'.$fields[ 'email' ].'",'.$phonecsr1.'
+                        "email": "'.$fields[ 'email' ].'",
                         "subscriptions": {
                           "email": {
                             "marketing": {
