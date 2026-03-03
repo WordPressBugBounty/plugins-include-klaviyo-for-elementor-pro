@@ -322,7 +322,7 @@ class Tho_klaviyo_Form_Action extends \ElementorPro\Modules\Forms\Classes\Integr
         }
 
         $phonecsr1 = $phonecsr != '' ? "$phonecsr," : '';
-        $phonecsr2 = $phonecsr != '' ? ",$phonecsr," : '';
+        $phonecsr2 = $phonecsr != '' ? ",$phonecsr" : '';
 
         foreach($listarg as $listid){
         $bodyOutput = '{
