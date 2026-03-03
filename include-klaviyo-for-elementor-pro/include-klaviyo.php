@@ -312,7 +312,7 @@ class Tho_klaviyo_Form_Action extends \ElementorPro\Modules\Forms\Classes\Integr
         //$proid = 'Test ID';
 
         if (isset($settings['klaviyo_consent_sms']) && $settings['klaviyo_consent_sms'] === "enable") {
-            $phonecsr = ',"sms": {
+            $phonecsr = '"sms": {
                 "marketing": {
                   "consent": "SUBSCRIBED"
                 }
