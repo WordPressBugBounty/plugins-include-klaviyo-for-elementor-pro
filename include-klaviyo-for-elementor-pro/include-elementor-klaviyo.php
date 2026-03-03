@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Include Klaviyo for Elementor pro
  * Description:       Klaviyo's list API integration for Elementor pro form
- * Version:           5.1.4
+ * Version:           5.1.5
  * Author:            Thong Nguyen
  * Author URI:        https://nguyenminhthong.net/aboutme
  * License:           GPL v2 or later
@@ -61,7 +61,7 @@ final class Tho_Elementor_Extension {
      *
      * @var string The plugin version.
      */
-    const VERSION = '5.1.4';
+    const VERSION = '5.1.5';
 
     /**
      * Minimum Elementor Version

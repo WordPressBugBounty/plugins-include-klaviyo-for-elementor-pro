@@ -317,10 +317,20 @@ class Tho_klaviyo_Form_Action extends \ElementorPro\Modules\Forms\Classes\Integr
                   "consent": "SUBSCRIBED"
                 }
               }';
+
+              if($this->phoneActive === true){
+                if(isset($fields[ 'phone_number' ])){
+                    $pnumber = $fields['phone_number'];
+                }else{
+                    $pnumber = "";
+                }
+            }
+              
         }else{
             $phonecsr = '';
         }
 
+        
         //$phonecsr1 = $phonecsr != '' ? "$phonecsr," : '';
         $phonecsr2 = $phonecsr != '' ? ",$phonecsr" : '';
 
@@ -336,6 +346,7 @@ class Tho_klaviyo_Form_Action extends \ElementorPro\Modules\Forms\Classes\Integr
                       "id": "'.$proid.'",
                       "attributes": {
                         "email": "'.$fields[ 'email' ].'",
+                        "phone_number": "'.$pnumber.'",
                         "subscriptions": {
                           "email": {
                             "marketing": {

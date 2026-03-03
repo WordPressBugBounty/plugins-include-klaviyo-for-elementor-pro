@@ -4,7 +4,7 @@ Donate link: paypal.me/nguyenminhthong
 Tags: Klaviyo, Elementor Pro
 Requires at least: 5.4
 Tested up to: 6.9
-Stable tag: 5.1.3
+Stable tag: 5.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -121,16 +121,7 @@ follow the guide here: https://nguyenminhthong.net/resource
 =Version 5.1.0=
 1. Limit API calls and reduce dashboard loading time
 
-=Version 5.1.1=
-1. Bugs fix (sms consent)
-
-=Version 5.1.2=
-1. Bugs fix (sms consent)
-
-=Version 5.1.3=
-1. Bugs fix (sms consent)
-
-=Version 5.1.4=
+=Version 5.1.5=
 1. Bugs fix (sms consent)
 
 == Upgrade notice ==
