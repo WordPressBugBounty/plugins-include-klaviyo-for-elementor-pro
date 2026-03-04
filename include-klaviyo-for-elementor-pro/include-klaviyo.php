@@ -285,6 +285,7 @@ class Tho_klaviyo_Form_Action extends \ElementorPro\Modules\Forms\Classes\Integr
             if(isset($fields[ 'phone_number' ])){
                 $profdata['attributes']['phone_number'] = $fields[ 'phone_number' ];
                 $phonecs = '"phone_number":"'.$fields['phone_number'].'",';
+                $pnumber = $fields['phone_number'];
                 unset($fields[ 'phone_number' ]);
             }
         }
@@ -317,17 +318,10 @@ class Tho_klaviyo_Form_Action extends \ElementorPro\Modules\Forms\Classes\Integr
                   "consent": "SUBSCRIBED"
                 }
               }';
-
-              if($this->phoneActive === true){
-                if(isset($fields[ 'phone_number' ])){
-                    $pnumber = $fields['phone_number'];
-                }else{
-                    $pnumber = "";
-                }
-            }
               
         }else{
             $phonecsr = '';
+            $pnumber ="";
         }
 
         
